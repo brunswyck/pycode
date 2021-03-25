@@ -1,2 +1,1 @@
-![](https://github.com/brunswyck/pycode/workflows/python-app/badge.svg)
-pipeline for building python apps
+![python main](https://github.com/brunswyck/pycode/actions/workflows/python-app.yml/badge.svg?branch=main)
