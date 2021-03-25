@@ -19,7 +19,7 @@ jobs:
       with:
         fetch-depth: 0
       run: |
-        git fetch --prune --unshallow  # heroku requires this
+        git fetch --unshallow origin # heroku requires this
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
