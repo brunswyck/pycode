@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]  # might change to 'main' over time
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2 # checks-out your repo under $GITHUB_WORKSPACE, so your workflow can access it
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
       run: |
         git fetch --unshallow origin # heroku requires this
     - name: Set up Python 3.9
@@ -41,7 +43,7 @@ jobs:
       env:
         HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }} 
-      if: github.ref == 'refs/heads/main' && job.status == 'success' # condition for deployment
+      if: github.ref == 'refs/heads/master' && job.status == 'success' # condition for deployment
       run: |
-        git remote add heroku git@heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git
-        git push -f heroku HEAD:main  # HEAD = latest commit on current branch
+        git remote add heroku https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git
+        git push -f heroku HEAD:master  # HEAD = latest commit on current branch
